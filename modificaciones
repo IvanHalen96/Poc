@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<body>
+<?php 
+$tabla=$id = $dato = $nombreID = $campo =""; 
+include_once "la_barra.php";
+?>
+
+
+<h3> Welcome to which table you want to modify the data:</h3>
+<form method="GET" name="form1">
+
+ <ul>
+	<li>Entities</li>
+		<ul>
+		<li>Employee</li>
+		<li>Industrie</li>
+		<li>Proyect</li>
+		<li>Sale</li>
+		</ul>
+	<li>Relations</li>	
+		<ul>
+		<li>Sale_Pr</li>
+		<li>Ind_Empl</li>
+		<li>Empl_Pr</li>
+		</ul>
+	</ul>
+	Select one of chosing:<select name="tabla">
+		<option value="employee">Employee</option>
+		<option value="industrie">Industrie</option>
+		<option value="project">Project</option>
+		<option value="sale">Sale</option>
+		<option value="EMPR_EMPL">Ind_Empl</option>
+		<option value="EMPL_PR">EMPL_Pr</option>
+		<option value="VEN_PR">Sale_Pr</option>
+		</select>
+		<input type="submit" name="submit" value="eligio">
+</form>
+
+
+<form method="GET">
+<?php
+if(!empty($_GET['submit'])){
+	
+$tabla=$_GET['tabla']; 
+setcookie("cookie[tabla]","$tabla");
+
+echo $tabla;
+	switch ($tabla){
+	
+		case "EMPL_PR": 
+		$nombreID="id_empl";
+			?> 
+		<br><select name="campo">
+		<option value="id_pry">id_pry</option>
+		</select> 
+		<?php 
+		break;
+		
+		case "employee": 
+		$nombreID="id_empl";
+			?>
+		<br><select name="campo">
+		<option value="nombre">nombre</option>
+		<option value="correo">correo</option>
+		<option value="tel">telefono</option>
+		<option value="area">area</option>
+		<option value="cargo">cargo</option>
+		<option value="salario">salario</option>
+		</select>
+		
+		<?php 
+		break;
+		
+		case "EMPR_EMPL": 
+		$nombreID="id_empl";
+			?> 
+		<br><select name="campo">
+		<option value="id_empr">id_empl</option>
+		</select>	
+			<?php 
+		break;
+		
+		case "industrie": 
+		$nombreID="CUIT";	
+		?>
+			
+		<br><select name="campo">
+		<option value="nombre">nombre</option>
+		<option value="direccion">direccion</option>
+		<option value="telefono">telefono</option>
+		<option value="web">web</option>
+		<option value="razon_social">razon_social</option>
+		</select> 
+		<?php 
+		break;
+		
+		case "project": 
+		$nombreID="id_pry";
+			?> 
+		<br><select name="campo">
+		<option value="nombre">nombre</option>
+		<option value="hs">hs</option>
+		<option value="costos_extra">costos_extra</option>
+		<option value="prioridad">prioridad</option>
+		</select>		
+			<?php 
+		break;
+		
+		case "sale": 
+		$nombreID="id_ven";
+			?>
+		<br><select name="campo">
+		<option value="fecha">fecha</option>
+		<option value="precio_venta">precio_venta</option>
+		<option value="precio_final">precio_final</option>
+		<option value="estado">estado</option>
+		<option value="resultado">resultado</option>
+		<option value="CUIT">CUIT</option>
+		</select>		
+			<?php 
+		break;
+		
+		case "VEN_PR": 
+		$nombreID="id_pry";
+			?> 
+		<br><select name="campo">
+		<option value="id_ven">id_ven</option>
+		</select>
+			
+			<?php 
+		break;
+		}
+		
+		setcookie("cookie[nombreID]","$nombreID");
+	}
+?>
+	<input type="submit" name="campo_b" value="modificar campo"> <br><br>
+	</form>
+	<form method="GET">
+<?php	
+	
+if(!empty($_GET['campo_b'])){
+	
+$campo=$_GET['campo'];
+setcookie("cookie[campo]","$campo");
+
+
+
+echo $campo;
+	switch($campo){
+		
+		case "nombre":
+		case "area":
+		case "cargo":
+		?><br>dato:<input type="text" name="dato"> <?php
+		break;
+		case "fecha":
+		?><br>dato:<input type="date" name="dato"><?php
+		break;
+		
+		case "prioridad":
+		?><br>dato:<select name="dato">
+					<option value="baja">Baja</option>
+					<option value="media">Media</option>
+					<option value="alta">Alta</option>
+					</select>
+		<?php	
+		break;
+		case "tel":
+		case "precio_venta":
+		case "salario":
+		case "precio_final":
+		case "hs":
+		case "costo_extra":
+		case "id_empr":
+		case "CUIT":
+		case "id_ven":
+		case "id_pry":
+		?><br>dato:<input type="number" name="dato"> <?php
+		break;
+		
+	}
+}
+
+
+?>
+<form method="GET">
+<br><br>
+Ingrese el id del campo a modificar:<input type="number" name="id">
+				<input type="submit" name="modificar" value="Aceptar">
+				
+				</form>
+<?php
+if(!empty($_GET['modificar'])){
+
+$id=$_GET['id'];
+setcookie("cookie[id]","$id");
+
+$dato=$_GET['dato'];
+setcookie("cookie[dato]","$dato");
+
+$tabla2=$id2 = $dato2 = $nombreID2 = $campo2 ="";
+if (isset($_COOKIE['cookie'])) {
+    foreach ($_COOKIE['cookie'] as $name => $value) {
+        $name = htmlspecialchars($name);
+        $value = htmlspecialchars($value);
+        echo "$name : $value <br />\n";
+		
+		switch($name)
+		{ 
+			case "tabla":
+			$tabla2=$value;
+			break;
+			
+			case "id":
+			$id2=$value;
+			break;
+			
+			case "dato":
+			$dato2=$value;
+			break;
+			
+			case "campo":
+			$campo2=$value;
+			break;
+		
+			case "nombreID":
+			$nombreID2=$value;
+			break;
+		
+		}
+	}
+}
+ 
+
+
+$servername = "localhost";
+$username = "ivanhalen";
+$password = "pan";
+$dbase="new_db";
+$mysqli = new mysqli($servername, $username, $password ,$dbase);
+if ($mysqli->connect_error) {
+	die('<pre>Error with connection: ' . $mysqli->connect_errno.'</pre>');
+} else {
+	echo "<pre>Connected successfully</pre>";
+}
+
+$sql = "UPDATE $tabla2 
+SET $campo2='$dato2' 
+WHERE $id2=$nombreID2";
+
+if ($mysqli->query($sql) === TRUE) {
+    echo "Record updated successfully";
+} else {
+    echo "Error updating record: " . $mysqli->error;
+ }
+}
+?>
+</body>
+</hmtl>
+
+
+
+
+
+
+
+
+
+
+
+
