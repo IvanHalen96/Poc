@@ -237,7 +237,7 @@ if (isset($_COOKIE['cookie'])) {
 
 $servername = "localhost";
 $username = "ivanhalen";
-$password = "pan";
+$password = "xxx";
 $dbase="new_db";
 $mysqli = new mysqli($servername, $username, $password ,$dbase);
 if ($mysqli->connect_error) {
